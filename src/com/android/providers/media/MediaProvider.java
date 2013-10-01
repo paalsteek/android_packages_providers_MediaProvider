@@ -5061,8 +5061,10 @@ public class MediaProvider extends ContentProvider {
                             Log.i(TAG, "External volume is not (yet) mounted, cannot attach.");
                         }
 
-                        throw new IllegalArgumentException("Can't obtain external volume ID for " +
-                                volume + " volume.");
+                        // Engle, 添加NTFS支持，允许volumeID为0xffffffff
+                        if (!Environment.MEDIA_MOUNTED.equals(state))
+                            throw new IllegalArgumentException("Can't obtain external volume ID for " +
+                                    volume + " volume.");
                     }
 
                     // generate database name based on volume ID
